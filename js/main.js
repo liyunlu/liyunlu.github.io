@@ -288,17 +288,15 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   const jqLoadAndRun = () => {
-    const $fancyboxEle = GLOBAL_CONFIG.lightbox === 'fancybox'
-      ? document.querySelectorAll('#article-container :not(a):not(.gallery-group) > img, #article-container > img') 
-      : []
-    const fbLengthNoZero = $fancyboxEle.length > 0
+    const isFancybox = GLOBAL_CONFIG.lightbox === 'fancybox'
+    const $fancyboxEle = isFancybox ? document.querySelectorAll('#article-container :not(a):not(.gallery-group) > img, #article-container > img') : null
     const $jgEle = document.querySelectorAll('#article-container .justified-gallery')
-    const jgLengthNoZero = $jgEle.length > 0
+    const jgEleLength = $jgEle.length
 
-    if (jgLengthNoZero || fbLengthNoZero) {
+    if (jgEleLength || $fancyboxEle !== null) {
       btf.isJqueryLoad(() => {
-        jgLengthNoZero && runJustifiedGallery($jgEle)
-        fbLengthNoZero && addFancybox($fancyboxEle)
+        jgEleLength && runJustifiedGallery($jgEle)
+        isFancybox && addFancybox($fancyboxEle)
       })
     }
   }
